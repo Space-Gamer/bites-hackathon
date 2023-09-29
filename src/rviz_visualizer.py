@@ -48,11 +48,11 @@ if __name__=="__main__":
 
     cartesian_pts = []
       
-    rospy.init_node("rviz_visualizer")
+    rospy.init_node("rviz_visualizer", anonymous=True)
     print("rviz_visualizer node started")
     marker_pub = rospy.Publisher("/visualization_marker_array", MarkerArray, queue_size = 2)
     rospy.Subscriber("/spherical_coord", spherical_coord, sph_coord_cb)
 
     while not rospy.is_shutdown():
-        rviz_pts(cartesian_pts, marker_pub)
+        marker_pub.publish(rviz_pts(cartesian_pts, marker_pub))
         rospy.sleep(1)
