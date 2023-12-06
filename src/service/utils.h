@@ -1,4 +1,5 @@
 #include <cmath>
+#include <geometry_msgs/Point.h>
 /*
     Convert spherical coordinates to cartesian coordinates.
 
@@ -20,9 +21,19 @@
     z : float
         Z coordinate.
 */
-std::tuple<double, double, double> rad_az_ele_to_xyz(double rad, double az, double ele) {
-    double x = rad * std::cos(ele) * std::cos(az);
-    double y = rad * std::cos(ele) * std::sin(az);
-    double z = rad * std::sin(ele);
-    return std::make_tuple(x, y, z);
+
+
+
+
+
+
+
+
+geometry_msgs::Point rad_az_ele_to_xyz(double rad, double az, double ele) {
+    geometry_msgs::Point cartesian_point;
+    cartesian_point.x = rad * std::cos(ele) * std::cos(az);
+    cartesian_point.y = rad * std::cos(ele) * std::sin(az);
+    cartesian_point.z = rad * std::sin(ele);
+    return cartesian_point;
 }
+

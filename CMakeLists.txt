@@ -137,6 +137,8 @@ include_directories(
 
 add_executable(rviz_visualizer src/pub_sub/rviz_visualizer.cpp)
 add_executable(spherical_coord_pub src/pub_sub/spherical_coord_pub.cpp)
+add_executable(rviz_visualizer_client src/service/rviz_visualizer_client.cpp)
+add_executable(spherical_coord_server src/service/spherical_coord_server.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -154,6 +156,14 @@ target_link_libraries(rviz_visualizer
 )
 
 target_link_libraries(spherical_coord_pub 
+   ${catkin_LIBRARIES}
+)
+
+target_link_libraries(rviz_visualizer_client
+   ${catkin_LIBRARIES}
+)
+
+target_link_libraries(spherical_coord_server
    ${catkin_LIBRARIES}
 )
 

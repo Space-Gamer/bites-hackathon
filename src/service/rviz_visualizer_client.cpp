@@ -39,11 +39,11 @@ visualization_msgs::MarkerArray rviz_pts(const std::vector<geometry_msgs::Point>
 }
 
 void sph_coord_cb(const bites_hackathon::spherical_coord::ConstPtr& msg) {
-    cartesian_pts.push_back(utils::rad_az_ele_to_xyz(msg->rad, msg->azi, msg->ele));
+    cartesian_pts.push_back(rad_az_ele_to_xyz(msg->rad, msg->azi, msg->ele));
 }
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "rviz_visualizer");
+    ros::init(argc, argv, "rviz_visualizer_client");
     ROS_INFO("rviz_visualizer node started");
 
     ros::NodeHandle nh;
