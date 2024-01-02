@@ -1,0 +1,12 @@
+<launch>
+
+    <!-- Launch the ROS publisher node -->
+    <node name="bites_server" pkg="bites_hackathon" type="spherical_coord_pub_mv.py" output="screen" />
+
+    <!-- Launch the ROS subscriber node -->
+    <node name="bites_subscriber" pkg="bites_hackathon" type="rviz_visualizer_mv.py" output="screen" />
+
+    <!-- Launch RVIZ-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find bites_hackathon)/rviz/with_markers.rviz" />
+
+</launch>
