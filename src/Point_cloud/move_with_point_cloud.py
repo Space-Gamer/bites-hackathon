@@ -16,7 +16,7 @@ def sph_coord_pub():
     points_density = 1  #density of points
 
     while not rospy.is_shutdown():
-        for i in range(200):  #number of points in a point cloud
+        for i in range(100):  #number of points in a point cloud
             
             rad = random.uniform(0.1, 0.2)  # radius range
             azi = random.uniform(0.0, 0.25*math.pi)  # Azimuth range (0 to 45 degrees)
