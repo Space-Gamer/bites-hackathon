@@ -3,24 +3,29 @@
 import math
 import rospy
 import random
-from bites_hackathon.msg import spherical_coord_mv
+from bites_hackathon.msg import spherical_coord_mv_temp_point_cloud
 
 def sph_coord_pub():
-    pub = rospy.Publisher('spherical_coord', spherical_coord_mv, queue_size=10)
+    pub = rospy.Publisher('spherical_coord', spherical_coord_mv_temp_point_cloud, queue_size=10)
     rospy.init_node('spherical_coord_pub', anonymous=True)
     rate = rospy.Rate(10)
     j = 0
 
-    center = [0.0, 0.0, 0.0]  # location of sensor
-    rotation_radius = 8.0  #rotation radius
-    points_density = 1  #density of points
+    center = [0.0, 0.0, 0.0]  # Location of sensor
+    rotation_radius = 5.0  # Rotation radius
+    points_density = 0.1  # Density of points
+    t_lst = [i for i in range(35, 101)]
 
     while not rospy.is_shutdown():
-        for i in range(100):  #number of points in a point cloud
-            
-            rad = random.uniform(0.1, 0.2)  # radius range
-            azi = random.uniform(0.0, 0.25*math.pi)  # Azimuth range (0 to 45 degrees)
-            ele = random.uniform(0.0, 0.25*math.pi)  # Elevation range (0 to 45 degrees) #Basically sensor range can be defined
+
+        temperature = random.choice(t_lst)
+        num_points = int(200 - (temperature - 35) ** 2)  # Decreasing points with increasing temperature
+
+        for i in range(num_points):  # Number of points in a point cloud
+
+            rad = random.uniform(0.1, 0.5)  # radius range
+            azi = random.uniform(0.0, 0.5*math.pi)  # Azimuth range (0 to 90 degrees)
+            ele = random.uniform(0.0, 0.5*math.pi)  # Elevation range (0 to 90 degrees) #Basically sensor range can be defined
 
             # Rotation around the center point
             rotation_angle = (j * 0.1) % (2 * math.pi)  # Circular motion in azimuth
@@ -31,9 +36,12 @@ def sph_coord_pub():
             translated_azi = rotated_azi + center[0]
             translated_ele = ele + center[1]
 
-            msg = spherical_coord_mv()
+            msg = spherical_coord_mv_temp_point_cloud()
             msg.rad, msg.azi, msg.ele = translated_rad, translated_azi, translated_ele
             msg.index = j
+            msg.temperature = temperature
+            msg.max_temperature = 100
+            msg.points  = num_points
             rospy.loginfo(msg)
             pub.publish(msg)
         j += 1

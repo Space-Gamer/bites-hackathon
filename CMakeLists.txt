@@ -53,6 +53,7 @@ find_package(catkin REQUIRED COMPONENTS
     spherical_coord.msg
     spherical_coord_mv.msg
     spherical_coord_mv_temp.msg
+    spherical_coord_mv_temp_point_cloud.msg
  )
 
 ## Generate services in the 'srv' folder
