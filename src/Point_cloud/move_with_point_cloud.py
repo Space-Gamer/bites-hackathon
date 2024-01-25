@@ -13,7 +13,7 @@ def sph_coord_pub():
 
     center = [0.0, 0.0, 0.0]  # Location of sensor
     rotation_radius = 5.0  # Rotation radius
-    points_density = 0.1  # Density of points
+    
     t_lst = [i for i in range(35, 101)]
 
     while not rospy.is_shutdown():
@@ -23,11 +23,14 @@ def sph_coord_pub():
 
         for i in range(num_points):  # Number of points in a point cloud
 
-            rad = random.uniform(0.1, 0.5)  # radius range
-            azi = random.uniform(0.0, 0.5*math.pi)  # Azimuth range (0 to 90 degrees)
-            ele = random.uniform(0.0, 0.5*math.pi)  # Elevation range (0 to 90 degrees) #Basically sensor range can be defined
-
-            # Rotation around the center point
+            # rad = random.uniform(0.1, 0.5)  # radius range
+            # azi = random.uniform(0.0, 0.5*math.pi)  # Azimuth range (0 to 90 degrees)
+            # ele = random.uniform(0.0, 0.5*math.pi)  # Elevation range (0 to 90 degrees) #Basically sensor range can be defined
+            rad = random.uniform(0.1, 0.2)  # radius range
+            azi = random.uniform(0.0, 0.25*math.pi)  # Azimuth range (0 to 45 degrees)
+            ele = random.uniform(0.0, 0.25*math.pi) 
+            
+           # Rotation around the center point
             rotation_angle = (j * 0.1) % (2 * math.pi)  # Circular motion in azimuth
             rotated_azi = azi + rotation_angle
 
@@ -36,6 +39,7 @@ def sph_coord_pub():
             translated_azi = rotated_azi + center[0]
             translated_ele = ele + center[1]
 
+            
             msg = spherical_coord_mv_temp_point_cloud()
             msg.rad, msg.azi, msg.ele = translated_rad, translated_azi, translated_ele
             msg.index = j

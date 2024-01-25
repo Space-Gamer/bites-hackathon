@@ -100,7 +100,7 @@ def sph_coord_cb(msg):
         temperature = msg.temperature
         max_temperature = msg.max_temperature
 
-    cartesian_pts.append([msg.rad, msg.azi, msg.ele,msg])
+    cartesian_pts.append(rad_az_ele_to_xyz(msg.rad, msg.azi, msg.ele))
 
 if __name__ == "__main__":
     cartesian_pts = []
