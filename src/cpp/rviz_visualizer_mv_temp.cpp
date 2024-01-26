@@ -2,21 +2,31 @@
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <bites_hackathon/spherical_coord_mv_temp.h>
+#include <sstream>
+#include "geometry_msgs/Point.h"
 
 #include "utils.h"  // Assuming utils.h contains the necessary function declarations
 
 std::vector<geometry_msgs::Point> cartesian_pts;
-//cartesian_pts: name of the variable. A vector that holds instances of geometry_msgs::Point
+//cartesian_pts: name of the global variable. 
+//std::vector - a dynamic array container
+//geometry_msgs::Point is a message type
+//A vector that holds instances of geometry_msgs::Point
 
-int index = 0;
+
+int my_index = 0;
 int temperature = 0;
 
 visualization_msgs::MarkerArray rviz_pts(const std::vector<geometry_msgs::Point>& pts) {
-    visualization_msgs::MarkerArray markers;
+//function, named rviz_pts, takes a vector of geometry_msgs::Point as input and returns a visualization_msgs::MarkerArray
+ 
+    visualization_msgs::MarkerArray markers; //initializes an empty visualization_msgs::MarkerArray named markers
 
     if (pts.empty()) {
         return markers;
     }
+
+
 
     // Temperature Marker
     visualization_msgs::Marker temperature_marker;
@@ -61,9 +71,11 @@ visualization_msgs::MarkerArray rviz_pts(const std::vector<geometry_msgs::Point>
 }
 
 void sph_coord_cb(const bites_hackathon::spherical_coord_mv_temp::ConstPtr& msg) {
-    if (msg->index != index) {
-        cartesian_pts.clear();
-        index = msg->index;
+//declares a function named sph_coord_cb that takes a constant reference to a pointer of type bites_hackathon::spherical_coord_mv_temp as an argument. The function doesn't return any value (void)    
+    
+    if (msg->index != my_index) {
+        cartesian_pts.clear();//If the condition in the previous if statement is true, it means that the index has changed. In that case, this line clears the contents of the cartesian_pts vector.
+        my_index = msg->index;
         temperature = msg->temperature;
     }
 
@@ -74,19 +86,30 @@ void sph_coord_cb(const bites_hackathon::spherical_coord_mv_temp::ConstPtr& msg)
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "rviz_visualizer_mv_temp");
+    //ros::init function is used to initialize the ROS library. It takes the command line arguments (argc and argv) and a string argument representing the name of the ROS node. 
     ROS_INFO("rviz_visualizer node started");
 
     ros::NodeHandle nh;
-    ros::Publisher marker_pub = nh.advertise<visualization_msgs::MarkerArray>("/visualization_marker_array", 2);
-    ros::Subscriber sub = nh.subscribe("/spherical_coord", 2, sph_coord_cb);
 
-    ros::Rate loop_rate(1000);  // Adjust the rate as needed
+    ros::Publisher marker_pub = nh.advertise<visualization_msgs::MarkerArray>("/visualization_marker_array", 2);
+    //Declares a publisher object named marker_pub for publishing messages
+    //Advertises a topic named "/visualization_marker_array" for publishing messages of type visualization_msgs::MarkerArray
+    //2-queue size
+
+    ros::Subscriber sub = nh.subscribe("/spherical_coord", 2, sph_coord_cb);
+    //Declares a subscriber object named sub for subscribing to messages
+    //Subscribes to the topic "/spherical_coord" for messages of type bites_hackathon::spherical_coord_mv_temp
+    //2-queue size
+
+    ros::Rate rate(1);  // Adjust the rate as needed
 
     while (ros::ok()) {
         marker_pub.publish(rviz_pts(cartesian_pts));
         ros::spinOnce();
-        loop_rate.sleep();
+        //loop_rate.sleep();
+        rate.sleep();
     }
+    
 
     return 0;
 }

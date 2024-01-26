@@ -118,6 +118,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
@@ -138,9 +139,10 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/bites_hackathon_node.cpp)
 
-##add_executable(rviz_visualizer src/cpp/rviz_visualizer.cpp)
+add_executable(rviz_visualizer src/cpp/rviz_visualizer.cpp)
 add_executable(spherical_coord_pub src/cpp/spherical_coord_pub.cpp)
 add_executable(rviz_visualizer_mv_temp src/cpp/rviz_visualizer_mv_temp.cpp)
+add_executable(spherical_coord_pub_mv_temp src/cpp/spherical_coord_pub_mv_temp.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -157,6 +159,23 @@ add_executable(rviz_visualizer_mv_temp src/cpp/rviz_visualizer_mv_temp.cpp)
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+target_link_libraries(rviz_visualizer_mv_temp
+   ${catkin_LIBRARIES}
+)
+
+target_link_libraries(spherical_coord_pub 
+   ${catkin_LIBRARIES}
+)
+
+target_link_libraries(rviz_visualizer
+   ${catkin_LIBRARIES}
+)
+
+target_link_libraries(spherical_coord_pub_mv_temp 
+ ${catkin_LIBRARIES}
+)
+
 
 #############
 ## Install ##
