@@ -96,12 +96,12 @@ int main(int argc, char** argv) {
     //Advertises a topic named "/visualization_marker_array" for publishing messages of type visualization_msgs::MarkerArray
     //2-queue size
 
-    ros::Subscriber sub = nh.subscribe("/spherical_coord", 2, sph_coord_cb);
+    ros::Subscriber sub = nh.subscribe("/spherical_coord", 10, sph_coord_cb);
     //Declares a subscriber object named sub for subscribing to messages
     //Subscribes to the topic "/spherical_coord" for messages of type bites_hackathon::spherical_coord_mv_temp
     //2-queue size
 
-    ros::Rate rate(1);  // Adjust the rate as needed
+    ros::Rate rate(1000);  // Adjust the rate as needed
 
     while (ros::ok()) {
         marker_pub.publish(rviz_pts(cartesian_pts));
