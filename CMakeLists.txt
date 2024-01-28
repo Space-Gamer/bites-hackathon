@@ -139,10 +139,10 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/bites_hackathon_node.cpp)
 
-add_executable(rviz_visualizer src/cpp/rviz_visualizer.cpp)
-add_executable(spherical_coord_pub src/cpp/spherical_coord_pub.cpp)
-add_executable(rviz_visualizer_mv_temp src/cpp/rviz_visualizer_mv_temp.cpp)
-add_executable(spherical_coord_pub_mv_temp src/cpp/spherical_coord_pub_mv_temp.cpp)
+add_executable(rviz_visualizer src/cpp/pub_sub/rviz_visualizer.cpp)
+add_executable(spherical_coord_pub src/cpp/pub_sub/spherical_coord_pub.cpp)
+add_executable(rviz_visualizer_mv_temp src/cpp/moving_obst_temp_var_pub_sub/rviz_visualizer_mv_temp.cpp)
+add_executable(spherical_coord_pub_mv_temp src/cpp/moving_obst_temp_var_pub_sub/spherical_coord_pub_mv_temp.cpp)
 
 
 ## Rename C++ executable without prefix
