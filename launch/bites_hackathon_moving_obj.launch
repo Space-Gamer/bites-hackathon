@@ -1,0 +1,26 @@
+<launch>
+
+    <!-- Parameter to check if the user wants to use run the python script or c++ script -->
+    <arg name="python" default="true" />
+
+    <group if="$(arg python)">
+        <!-- Launch the python scripts -->
+        <!-- Launch the ROS server node -->
+        <node name="bites_server" pkg="bites_hackathon" type="spherical_coord_pub_mv_temp.py" output="screen" />
+        <!-- Launch the ROS client node -->
+        <node name="bites_client" pkg="bites_hackathon" type="rviz_visualizer_mv_temp.py" output="screen" />
+    </group>
+
+    <group unless="$(arg python)">
+        <!-- Launch the c++ scripts -->
+        <!-- Launch the ROS publisher node -->
+        <node name="bites_server" pkg="bites_hackathon" type="spherical_coord_pub_mv_temp" output="screen" />
+
+        <!-- Launch the ROS subscriber node -->
+        <node name="bites_subscriber" pkg="bites_hackathon" type="rviz_visualizer_mv_temp" output="screen" />
+    </group>
+
+    <!-- Launch RVIZ-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find bites_hackathon)/rviz/with_markers.rviz" />
+
+</launch>
