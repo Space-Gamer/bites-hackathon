@@ -17,6 +17,9 @@ std::vector<geometry_msgs::Point> cartesian_pts;
 int my_index = 0;
 int temperature = 0;
 
+std::tuple<double, double, double> color = std::make_tuple(0, 0, 0);//color=(0,0,0)
+
+
 visualization_msgs::MarkerArray rviz_pts(const std::vector<geometry_msgs::Point>& pts) {
 //function, named rviz_pts, takes a vector of geometry_msgs::Point as input and returns a visualization_msgs::MarkerArray
  
@@ -51,13 +54,18 @@ visualization_msgs::MarkerArray rviz_pts(const std::vector<geometry_msgs::Point>
         marker.id = i + 1;
         marker.header.frame_id = "map";
         marker.type = visualization_msgs::Marker::SPHERE;
+        marker.lifetime = ros::Duration(0.1);
         marker.scale.x = 0.25;
         marker.scale.y = 0.25;
         marker.scale.z = 0.25;
         marker.color.a = 1.0;
-        marker.color.r = 1.0;
-        marker.color.g = 0.0;
-        marker.color.b = 0.0;
+        // marker.color.r = 1.0;
+        // marker.color.g = 0.0;
+        // marker.color.b = 0.0;
+        marker.color.r = std::get<0>(color);
+        marker.color.g = std::get<1>(color);
+        marker.color.b = std::get<2>(color);
+
 
         marker.pose.orientation.w = 1.0;
         marker.pose.position.x = pts[i].x;
@@ -77,6 +85,8 @@ void sph_coord_cb(const bites_hackathon::spherical_coord_mv_temp::ConstPtr& msg)
         cartesian_pts.clear();//If the condition in the previous if statement is true, it means that the index has changed. In that case, this line clears the contents of the cartesian_pts vector.
         my_index = msg->index;
         temperature = msg->temperature;
+        color = (temperature >= 45) ? std::make_tuple(1, 0, 0) : (temperature > 40) ? std::make_tuple(1, 1, 0) : std::make_tuple(0, 1, 0);
+    
     }
 
     geometry_msgs::Point cartesian_pt;
