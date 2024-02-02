@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
     //Subscribes to the topic "/spherical_coord" for messages of type bites_hackathon::spherical_coord_mv_temp
     //2-queue size
 
-    ros::Rate rate(1000);  // Adjust the rate as needed
+    ros::Rate rate(10000);  // Adjust the rate as needed
 
     while (ros::ok()) {
         marker_pub.publish(rviz_pts(cartesian_pts));
