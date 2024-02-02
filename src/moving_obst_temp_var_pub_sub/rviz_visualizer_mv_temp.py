@@ -38,13 +38,14 @@ def rviz_pts(pts, marker_pub):
             marker.header.frame_id = "map"
             marker.type = marker.SPHERE
             # marker.action = marker.ADD
+            marker.lifetime = rospy.Duration(0.1)
             marker.scale.x = 0.25
             marker.scale.y = 0.25
             marker.scale.z = 0.25
             marker.color.a = 1.0
-            marker.color.r = 1.0
-            marker.color.g = 0.0
-            marker.color.b = 0.0
+            marker.color.r = color[0]
+            marker.color.g = color[1]
+            marker.color.b = color[2]
             
             marker.pose.orientation.w = 1.0
             marker.pose.position.x = pts[i][0]
@@ -59,10 +60,12 @@ def sph_coord_cb(msg):
     global cartesian_pts
     global index
     global temperature
+    global color
     if msg.index != index:
         cartesian_pts = []
         index = msg.index
         temperature = msg.temperature
+        color = (1, 0, 0) if temperature >= 45 else (1, 1, 0) if temperature > 40 else (0, 1, 0)
     
     cartesian_pts.append(rad_az_ele_to_xyz(msg.rad, msg.azi, msg.ele))
 
@@ -72,6 +75,7 @@ if __name__=="__main__":
     cartesian_pts = []
     index = 0
     temperature = 0
+    color = (0, 0, 0)
       
     rospy.init_node("rviz_visualizer", anonymous=True)
     print("rviz_visualizer node started")
