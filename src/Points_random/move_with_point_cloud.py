@@ -23,15 +23,13 @@ def sph_coord_pub():
 
         for i in range(num_points):  # Number of points in a point cloud
 
-            # rad = random.uniform(0.1, 0.5)  # radius range
-            # azi = random.uniform(0.0, 0.5*math.pi)  # Azimuth range (0 to 90 degrees)
-            # ele = random.uniform(0.0, 0.5*math.pi)  # Elevation range (0 to 90 degrees) #Basically sensor range can be defined
+            #Radar fov
             rad = random.uniform(0.1, 0.2)  # radius range
             azi = random.uniform(0.0, 0.25*math.pi)  # Azimuth range (0 to 45 degrees)
             ele = random.uniform(0.0, 0.25*math.pi) 
             
            # Rotation around the center point
-            rotation_angle = (j * 0.1) % (2 * math.pi)  # Circular motion in azimuth
+            rotation_angle = (j * 0.1) % (2 * math.pi) # Circular motion in azimuth
             rotated_azi = azi + rotation_angle
 
             # Translate to the center point with rotation_radius

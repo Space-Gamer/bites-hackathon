@@ -64,7 +64,7 @@ def rviz_pts(pts, temperature,max_temperature,points, marker_pub):
         temperature_color = temperature / max_temperature
 
         # Color Gradient
-        marker.color.r = 1.0 - temperature_color
+        marker.color.r = 1.0 -temperature_color
         marker.color.g = temperature_color
         marker.color.b = 0.0
 

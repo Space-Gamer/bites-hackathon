@@ -23,8 +23,8 @@ def sph_coord_pub():
 
         for i in range(num_points):  # Number of points in a point cloud
 
-            # Define ranges for creating a smaller square-like cluster
-            rad = random.uniform(0.01, 0.05)  # reduced radius range
+            
+            rad = random.uniform(0.01, 0.05)  
             azi = random.uniform(-0.05*math.pi, 0.05*math.pi)  # Azimuth range (-18 to 18 degrees)
             ele = random.uniform(-0.05*math.pi, 0.05*math.pi)  # Elevation range (-18 to 18 degrees) 
             
