@@ -33,16 +33,16 @@ def sph_coord_pub():
 
             cloud_points.append([translated_rad, translated_azi, translated_ele])
 
-        # Convert point cloud to PCL point cloud object
+        # Convert point cloud to PCL point cloud
         pcl_cloud = pcl.PointCloud()
         pcl_cloud.from_list(cloud_points)
 
-        #Voxel grid filtering (downsampling)
+        # Perform voxel grid filtering (downsampling)
         vg = pcl_cloud.make_voxel_grid_filter()
-        vg.set_leaf_size(0.01, 0.01, 0.01)
+        vg.set_leaf_size(0.01, 0.01, 0.01)  # Set the voxel grid leaf size
         filtered_cloud = vg.filter()
 
-        #PCL point cloud to ROS PointCloud2 message
+        # Convert the filtered PCL point cloud back to ROS PointCloud2 message
         filtered_cloud_points = filtered_cloud.to_list()
         cloud_msg = create_point_cloud2(filtered_cloud_points)
         pub.publish(cloud_msg)
