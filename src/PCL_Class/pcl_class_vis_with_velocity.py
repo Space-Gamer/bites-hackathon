@@ -27,6 +27,7 @@ def sph_coord_cb(msg):
     num_points = 0
     total_distance = 0
     prev_point = None
+
     for p in pc2.read_points(msg, field_names=("rad", "azi", "ele"), skip_nans=True):
         rad, azi, ele = p
 
@@ -34,21 +35,23 @@ def sph_coord_cb(msg):
         xyz_point = rad_az_ele_to_xyz(rad, azi, ele)
 
         if prev_point is not None:
-        
             distance = np.linalg.norm(np.array(xyz_point) - np.array(prev_point))
             total_distance += distance
 
         prev_point = xyz_point
 
     # Calculate speed in meters per second
-    speed_mps = total_distance / time_interval
+    if time_interval > 0:
+        speed_mps = total_distance / time_interval
+        print("Estimated speed:", speed_mps, "m/s")
+    else:
+        rospy.logwarn("Time interval is zero. Cannot calculate speed.")
 
-   
-    print("Estimated speed:", speed_mps, "meters per second")
-
-
-    
     visualize_point_cloud(msg)
+
+    # Update prev_time for next frame
+    prev_time = current_time
+
 
 def visualize_point_cloud(msg):
     global marker_pub
