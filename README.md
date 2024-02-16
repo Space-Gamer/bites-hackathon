@@ -44,13 +44,13 @@ Step1:
 
 ## Our Approach
 
-1. Utility Functions
+1. Utility Functions:
 The utils.py module contains helper functions for converting between spherical and Cartesian coordinates. These functions are used by both the publisher and subscriber scripts to ensure consistent coordinate transformations.
 
-2. Data Generation and Publishing
+2. Data Generation and Publishing:
 The spherical_coord_pub_mv_temp.py script is responsible for generating and publishing temperature data along with spherical coordinates. We simulate a moving object that emits temperature data at different points in space. The temperature data is randomly chosen within a specified range, and the object's position is updated based on predefined spherical coordinates. The data is published on the /spherical_coord topic using a custom message type spherical_coord_mv_temp.
 
-3. Data Visualization
+3. Data Visualization:
 The rviz_visualizer_mv_temp.py script subscribes to the /spherical_coord topic and visualizes the temperature data in RViz. It converts the spherical coordinates to Cartesian coordinates using the utility function rad_az_ele_to_xyz from the utils.py module. The temperature data is represented as colored spheres in 3D space, with the color indicating the temperature level (e.g., red for high temperatures, green for moderate temperatures, and blue for low temperatures). Additionally, the script displays a text marker showing the current temperature value. The script continuously runs in a loop, updating and republishing markers as new data is received, ensuring real-time visualization of the spherical coordinates and their temperatures.
 
 
